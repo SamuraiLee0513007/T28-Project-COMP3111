@@ -4,3 +4,7 @@ https://github.com/SamuraiLee0513007/T28-Project-COMP3111
     email:cyleeax | github:SamuraiLee0513007|  
     dev branch:samurai_1  
     Individual task assignment: Task C1 & Task C2
+1. Ho Wing Yiu, Ryan 
+    email:wyhoap@connect.ust.hk | github:vzryaho|  
+    dev branch:nk_feature1_ryan_lab
+    Individual task assignment: Task A1 & Task A2
