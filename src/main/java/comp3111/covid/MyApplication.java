@@ -47,7 +47,7 @@ public class MyApplication extends Application {
    		VBox root = (VBox) loader.load();
    		Scene scene =  new Scene(root);
    		stage.setScene(scene);
-   		stage.setTitle("Top Secret Project RX78");
+   		stage.setTitle("Any Title You Like"); 
    		stage.show();
 	}
 
