@@ -6,9 +6,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
 public class RecordsTester {
-	private Records R;
+	Records R;
 	@Before
 	public void setUp() throws Exception {
 	   CSVParser p = DataAnalysis.getFileParser("COVID_Dataset_v1.0.csv");
