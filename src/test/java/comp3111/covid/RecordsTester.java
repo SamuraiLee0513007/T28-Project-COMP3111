@@ -33,7 +33,7 @@ public class RecordsTester {
 		} 
 		R = new Records(d,TC,TC1,TD,TD1,FV,v);	
 	}
-	
+	Records Another = new Records(R);
 	@Test
 	public void testFullyVaccinated() {
 		assertEquals(R.getFullyVaccninated(),2065375);
@@ -61,5 +61,9 @@ public class RecordsTester {
 	@Test 
 	public void Testrate() {
 		assertEquals(R.getvaccination_rate(),0.275493,0.001);
+	}
+	@Test
+	public void TestConstructor() {
+		assertThat(R).isEqualTo(Another);
 	}
 }

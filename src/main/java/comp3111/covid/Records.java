@@ -7,7 +7,7 @@ public class Records {
    private float TotalCasesper1M;
    private long TotalDeath;
    private float TotalDeathper1M;
-   private long FullyVaccninated;
+   private long FullyVaccinated;
    private float vaccination_rate;
    public Records(String d,long TC,float TC1,long TD,float TD1,long FV,float v) {
 	   Date = d;
@@ -15,9 +15,18 @@ public class Records {
 	   TotalCasesper1M = TC1;
 	   TotalDeath = TD;
 	   TotalDeathper1M = TD1;
-	   FullyVaccninated = FV;
+	   FullyVaccinated = FV;
 	   vaccination_rate = v;
    };
+   public Records(Records r) {
+	   Date = r.Date;
+	   TotalCases = r.TotalCases;
+	   TotalCasesper1M = r.TotalCasesper1M;
+	   TotalDeath = r.TotalDeath;
+	   TotalDeathper1M = r.TotalDeathper1M;
+	   FullyVaccinated = r.FullyVaccinated;
+	   vaccination_rate = r.vaccination_rate;
+   }
    public String getDate() {
 	   return Date;
    }
@@ -34,7 +43,7 @@ public class Records {
 	   return TotalDeathper1M;
    }
    public long getFullyVaccninated() {
-	   return FullyVaccninated;
+	   return FullyVaccinated;
    }
    public float getvaccination_rate() {
 	   return vaccination_rate;
@@ -55,7 +64,7 @@ public class Records {
 	   TotalDeathper1M = TD1;
    }
    public void setFullyVaccninated(long FV){
-	   FullyVaccninated = FV;
+	   FullyVaccinated = FV;
    }
    public void setvaccination_rate(float r){
 	   vaccination_rate = r;
