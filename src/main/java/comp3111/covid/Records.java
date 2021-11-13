@@ -19,13 +19,7 @@ public class Records {
 	   vaccination_rate = v;
    };
    public Records(Records r) {
-	   Date = r.Date;
-	   TotalCases = r.TotalCases;
-	   TotalCasesper1M = r.TotalCasesper1M;
-	   TotalDeath = r.TotalDeath;
-	   TotalDeathper1M = r.TotalDeathper1M;
-	   FullyVaccinated = r.FullyVaccinated;
-	   vaccination_rate = r.vaccination_rate;
+	   this(r.Date,r.TotalCases,r.TotalCasesper1M,r.TotalDeath,r.TotalDeathper1M,r.FullyVaccinated,r.vaccination_rate);
    }
    public String getDate() {
 	   return Date;
@@ -68,5 +62,14 @@ public class Records {
    }
    public void setvaccination_rate(float r){
 	   vaccination_rate = r;
+   }
+   public boolean equals(Records Re) {
+	   if(Date.compareTo(Re.Date)==0 && TotalCases==Re.TotalCases && Float.compare(TotalCasesper1M,Re.TotalCasesper1M)==0&&
+	   TotalDeath==Re.TotalDeath && FullyVaccinated==Re.FullyVaccinated&& Float.compare(TotalDeathper1M,Re.TotalDeathper1M)==0
+	   && Float.compare(vaccination_rate,Re.vaccination_rate)==0)
+		   return true;
+	   else
+		   return false;
+		   
    }
 }

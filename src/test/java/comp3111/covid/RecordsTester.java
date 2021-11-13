@@ -9,7 +9,7 @@ import org.junit.Test;
 public class RecordsTester {
 	Records R;
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception{
 	   CSVParser p = DataAnalysis.getFileParser("COVID_Dataset_v1.0.csv");
 	   String d=null; long TC=0,TD=0,FV=0; float TC1=0,TD1=0,v=0;
 	   for (CSVRecord rec : p) {
@@ -33,7 +33,6 @@ public class RecordsTester {
 		} 
 		R = new Records(d,TC,TC1,TD,TD1,FV,v);	
 	}
-	Records Another = new Records(R);
 	@Test
 	public void testFullyVaccinated() {
 		assertEquals(R.getFullyVaccninated(),2065375);
@@ -64,6 +63,7 @@ public class RecordsTester {
 	}
 	@Test
 	public void TestConstructor() {
-		assertThat(R).isEqualTo(Another);
+		Records Another = new Records(R);
+		assertTrue(R.equals(Another));
 	}
 }
