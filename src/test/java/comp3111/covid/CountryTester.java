@@ -15,30 +15,23 @@ public class CountryTester {
 	   CSVParser p = DataAnalysis.getFileParser("COVID_Dataset_v1.0.csv");
 	   for (CSVRecord rec : p) {
 		  if(rec.get("location").equals("Hong Kong")) {
-			 String d=null; long TC=0,TD=0,FV=0; float TC1=0,TD1=0,v=0;
+			 String d=null; long TC=0,TD=0,FV=0;
 			 c.set_iso_code("HKG");
 			 c.set_location("Hong Kong");
 			 String P = rec.get("population");
 			 long Po = Long.parseLong(P);
 			 c.set_population(Po);
 			 String tc = rec.get("total_cases");
-			 String tc1 = rec.get("total_cases_per_million");
 			 String td = rec.get("total_deaths");
-			 String td1 = rec.get("total_deaths_per_million");
 			 String fv = rec.get("people_fully_vaccinated");
 			 if(tc.compareTo("")!=0)
 		       TC = Long.parseLong(tc);
-			 if(tc1.compareTo("")!=0)
-		       TC1 = Float.parseFloat(tc1);
 		     if(td.compareTo("")!=0)
 		       TD = Long.parseLong(td);
-	         if(td1.compareTo("")!=0)
-	           TD1 = Float.parseFloat(td1);
 	         if(fv.compareTo("")!=0)
 	            FV = Long.parseLong(fv);
 	         d =rec.get("date");
-	         v = (float)FV/Po;
-	         Records R =new Records(d,TC,TC1,TD,TD1,FV,v);
+	         Records R =new Records(d,TC,TD,FV);
 	         c.addRecords(R);
 	         }
 		} 
