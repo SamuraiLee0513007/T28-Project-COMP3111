@@ -37,7 +37,7 @@ public class Records {
 	   return FullyVaccinated;
    }
    public float getvaccination_rate(long P) {
-	   return (float)FullyVaccinated*1000000/P;
+	   return (float)FullyVaccinated/P;
    }
    public void setDate(String d) {
 	   Date = d;
