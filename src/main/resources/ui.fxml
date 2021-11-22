@@ -54,6 +54,7 @@
                                       </columns>
                                     </TableView>
                                     <Label alignment="CENTER" layoutX="200.0" layoutY="27.0" prefHeight="34.0" prefWidth="516.0" text="Number of Confirmed COVID-19 Cases as of " />
+                                    <Button layoutX="579.0" layoutY="2.0" mnemonicParsing="false" text="Generate" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -106,6 +107,7 @@
                                       </yAxis>
                                     </LineChart>
                                     <Label layoutX="320.0" layoutY="44.0" prefHeight="29.0" prefWidth="294.0" text="Cumulative Confirmed COVID-19 Cases (per 1M)" />
+                                    <Button layoutX="536.0" layoutY="11.0" mnemonicParsing="false" text="Generate" />
                                  </children>
                               </AnchorPane>
                            </content>
