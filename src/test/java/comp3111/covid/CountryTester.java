@@ -57,6 +57,10 @@ public class CountryTester {
 			if(Cor[i].equals(Cr[i])==false)
 				flag = false;
 		}
+		java.time.LocalDate d = java.time.LocalDate.of(2021, 7, 20);
+		java.time.format.DateTimeFormatter dtf = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		assertEquals(Cor[544].getDate(),dtf.format(d));
+		assertEquals(Cr[544].getDate(),dtf.format(d));
 		assertTrue(flag);
 	}
 }
