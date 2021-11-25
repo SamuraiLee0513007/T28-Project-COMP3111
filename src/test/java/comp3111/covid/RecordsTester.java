@@ -1,9 +1,7 @@
 package comp3111.covid;
-
 import org.apache.commons.csv.*;
 import edu.duke.*;
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 public class RecordsTester {
@@ -18,10 +16,10 @@ public class RecordsTester {
 			 d =rec.get("date");
 			 String tc = rec.get("total_cases");
 		     TC = Long.parseLong(tc);
-		     String tc1 = rec.get("total_cases_per_million");
+		     //String tc1 = rec.get("total_cases_per_million");
 		     String td = rec.get("total_deaths");
 		     TD = Long.parseLong(td);
-	         String td1 = rec.get("total_deaths_per_million");	 
+	         //String td1 = rec.get("total_deaths_per_million");	 
 	         String fv = rec.get("people_fully_vaccinated");
 	         FV = Long.parseLong(fv);
 	         String P = rec.get("population");
@@ -52,7 +50,9 @@ public class RecordsTester {
 	}
 	@Test
     public void TestDate() {
-    	assertEquals(R.getDate(),"7/20/2021");
+		java.time.LocalDate d = java.time.LocalDate.of(2021, 7, 20);
+		java.time.format.DateTimeFormatter dtf = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    	assertEquals(R.getDate(),dtf.format(d));
     }
 	@Test 
 	public void Testrate() {
