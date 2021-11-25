@@ -1,21 +1,23 @@
 package comp3111.covid;
+import java.util.Vector;
+
 public class Country {
      private String location, iso_code;
      private long population;
-     private Records records[];
+     private Vector<Records> records;
      private int capacity, occupied;
      public Country() {
     	 capacity = 5; 
          occupied = 0;
     	 population = 0;
     	 iso_code = location = null;
-    	 records = new Records[capacity];
+    	 records = new Vector<Records>(capacity);
      }
      public Country(String lo,String iso,long po) {
     	 location = lo;
     	 iso_code = iso;
     	 capacity = 5;
-    	 records = new Records[capacity];
+    	 records = new Vector<Records>(capacity);
     	 occupied = 0;
     	 population = po;
      }
@@ -26,26 +28,19 @@ public class Country {
     	 set_records(c.records);
      }
      private void EnlargeStorageWMultiple(int minCapacity){
-         Records temp[] = new Records[capacity*minCapacity];
-         for (int i=0; i < capacity; i++)
-             temp[i] = new Records(records[i]);
-         records = temp;
+         records.ensureCapacity(minCapacity*capacity);
          capacity *= minCapacity;
      }
      public void addRecords(Records element){
          // double the capacity if all the allocated space is utilized
          if (occupied == capacity)
              EnlargeStorageWMultiple(2); 
-         records[occupied] = new Records(element);
-         occupied++;
+        records.add(element);
+        occupied++;
      }
      public Records[] get_records() {
-    	 Records[] temp= new Records[capacity];
-    	 for(int i=0;i<capacity;i++) {
-    		 if(records[i]!=null)
-    			 temp[i] = new Records(records[i]);
-    	 }
-    	 return temp;
+    	Records[] temp = new Records[capacity];
+    	return records.toArray(temp);
      }
      public String get_iso_code() {
     	 return iso_code;
@@ -62,18 +57,11 @@ public class Country {
      public int get_occupied() {
     	 return occupied;
      }
-     private void set_records(Records[] r){
-    	 Records[] temp= new Records[r.length];
-    	 int count=0;
-    	 for(int i=0;i<r.length;i++) {
-    		 if(r[i]!=null) {
-    			 temp[i] = new Records(r[i]);
-    	         count++;
-    		   }
-    		 }
-    	 occupied = count;
-    	 capacity = r.length;
-    	 records = temp;
+     private void set_records(Vector<Records> r){
+    	records = (Vector<Records>)r.clone();
+    	 occupied = r.size();
+    	 capacity = r.capacity();
+    	 
      }
      public void set_population(long P) {
     	 population = P;

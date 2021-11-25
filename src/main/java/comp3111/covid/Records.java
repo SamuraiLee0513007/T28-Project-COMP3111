@@ -1,8 +1,10 @@
 package comp3111.covid;
 import org.apache.commons.csv.*;
 import edu.duke.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class Records {
-   private String Date;
+   private LocalDate Date;
    private long TotalCases;
    //private float TotalCasesper1M;
    private long TotalDeath;
@@ -10,16 +12,16 @@ public class Records {
    private long FullyVaccinated;
    //private float vaccination_rate;
    public Records(String d,long TC,long TD,long FV) {
-	   Date = d;
+	   Date = LocalDate.parse(d,DateTimeFormatter.ofPattern("dd/mm/yyyy"));
 	   TotalCases = TC;
 	   TotalDeath = TD;
 	   FullyVaccinated = FV;
    };
    public Records(Records r) {
-	   this(r.Date,r.TotalCases,r.TotalDeath,r.FullyVaccinated);
+	   this(r.Date.toString(),r.TotalCases,r.TotalDeath,r.FullyVaccinated);
    }
    public String getDate() {
-	   return Date;
+	   return Date.toString();
    }
    public long getTotalCases() {
 	   return TotalCases;
@@ -40,7 +42,7 @@ public class Records {
 	   return (float)FullyVaccinated/P;
    }
    public void setDate(String d) {
-	   Date = d;
+	   Date = LocalDate.parse(d);
    }
    public void setTotalCases(long TC) {
 	   TotalCases = TC;
@@ -52,7 +54,7 @@ public class Records {
 	   FullyVaccinated = FV;
    }
    public boolean equals(Records Re) {
-	   if(Date.compareTo(Re.Date)==0 && TotalCases==Re.TotalCases &&
+	   if(Date.equals(Re.Date)&& TotalCases==Re.TotalCases &&
 	   TotalDeath==Re.TotalDeath && FullyVaccinated==Re.FullyVaccinated)
 		   return true;
 	   else
