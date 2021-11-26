@@ -1,9 +1,9 @@
 package comp3111.covid;
 
 public class Country {
-	String name;
-	String isoCode;
-	long population;
+	private String name;
+	private String isoCode;
+	private long population;
 	public Country(String name, String isoCode, long population) {
 		this.name = name;
 		this.isoCode = isoCode;
