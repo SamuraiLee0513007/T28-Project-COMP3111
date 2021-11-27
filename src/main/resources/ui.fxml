@@ -100,14 +100,14 @@
                                     <ListView fx:id="listCA" layoutX="14.0" layoutY="62.0" prefHeight="259.0" prefWidth="182.0" />
                                     <LineChart fx:id="chartCA" layoutX="189.0" layoutY="63.0" prefHeight="256.0" prefWidth="522.0">
                                       <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
+                                        <CategoryAxis label="Time" side="BOTTOM" />
                                       </xAxis>
                                       <yAxis>
-                                        <NumberAxis side="LEFT" />
+                                        <NumberAxis label="Cases" side="LEFT" />
                                       </yAxis>
                                     </LineChart>
                                     <Label layoutX="320.0" layoutY="44.0" prefHeight="29.0" prefWidth="294.0" text="Cumulative Confirmed COVID-19 Cases (per 1M)" />
-                                    <Button fx:id="generateCA" layoutX="536.0" layoutY="11.0" mnemonicParsing="false" text="Generate" />
+                                    <Button fx:id="generateCA" layoutX="536.0" layoutY="11.0" mnemonicParsing="false" text="Generate" onAction="#generateCA"/>
                                  </children>
                               </AnchorPane>
                            </content>
