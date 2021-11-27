@@ -25,7 +25,7 @@ public class Country {
 	   }
 	   if(country instanceof Country){
 	       Country c = (Country) country;
-	       return this.isoCode == c.isoCode;
+	       return this.isoCode.equals(c.isoCode);
 	   }
 	   return false;
 	}

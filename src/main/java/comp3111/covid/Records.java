@@ -1,13 +1,20 @@
 package comp3111.covid;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.apache.commons.csv.CSVRecord;
 
 public class Records {
 	private Set<Record> records = new HashSet<Record>();
+	public Records() { }
+	public Records(String dataset) {
+		try {
+			read(dataset);
+		} catch (Exception exception) {
+			System.out.println("An error occured while reading records.");
+		}
+	}
 
 	//reads all records from given dataset into records
 	public void read(String dataset) throws Exception {
@@ -29,7 +36,8 @@ public class Records {
 			}
 			s = rec.get("date");
 			if (!s.equals("")) {
-				date = LocalDate.parse(s, DateTimeFormatter.ofPattern("[MM-dd-yyyy][MM/dd/yyyy"));
+				String[] d = s.split("-|/");
+				date = LocalDate.of(Integer.parseInt(d[2]), Integer.parseInt(d[0]), Integer.parseInt(d[2]));
 			}
 			s = rec.get("new_cases");
 			if (!s.equals("")) {

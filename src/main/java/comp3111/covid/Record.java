@@ -73,7 +73,7 @@ public class Record {
 	   }
 	   if(rhs instanceof Record){
 	       Record record = (Record) rhs;
-	       return this.isoCode == record.isoCode && this.date.equals(record.date);
+	       return this.isoCode.equals(record.isoCode) && this.date.equals(record.date);
 	   }
 	   return false;
 	}
