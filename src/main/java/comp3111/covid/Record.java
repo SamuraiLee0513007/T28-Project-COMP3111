@@ -11,10 +11,10 @@ public class Record {
 	private LocalDate date;
 	private long newCases;
 	private long totalCases;
-	private long totalCasesPerMillion;
+	private double totalCasesPerMillion;
 	private long newDeaths;
 	private long totalDeaths;
-	private long totalDeathsPerMillion;
+	private double totalDeathsPerMillion;
 	private long fullyVaccinated;
 	private double rateOfVaccination;	// in percentage
 	public Record(String isoCode, LocalDate date) {
@@ -22,8 +22,8 @@ public class Record {
 		this.date = date;
 	}
 	public Record(String isoCode, LocalDate date, 
-			long newCases, long totalCases, long totalCasesPerMillion, 
-			long newDeaths, long totalDeaths, long totalDeathsPerMillion,
+			long newCases, long totalCases, double totalCasesPerMillion, 
+			long newDeaths, long totalDeaths, double totalDeathsPerMillion,
 			long fullyVaccinated, double rateOfVaccination) {
 		this.isoCode = isoCode;
 		this.date = date;
@@ -48,7 +48,7 @@ public class Record {
 	public long getTotalCases() {
 		return totalCases;
 	}
-	public long getTotalCasesPerMillion() {
+	public double getTotalCasesPerMillion() {
 		return totalCasesPerMillion;
 	}
 	public long getNewDeaths() {
@@ -57,7 +57,7 @@ public class Record {
 	public long getTotalDeaths() {
 		return totalDeaths;
 	}
-	public long getTotalDeathsPerMillion() {
+	public double getTotalDeathsPerMillion() {
 		return totalDeathsPerMillion;
 	}
 	public long getFullyVaccinated() {

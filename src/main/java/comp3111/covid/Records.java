@@ -1,6 +1,7 @@
 package comp3111.covid;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.apache.commons.csv.CSVRecord;
@@ -9,24 +10,21 @@ public class Records {
 	private Set<Record> records = new HashSet<Record>();
 	public Records() { }
 	public Records(String dataset) {
-		try {
-			read(dataset);
-		} catch (Exception exception) {
-			System.out.println("An error occured while reading records.");
-		}
+		read(dataset);
 	}
 
 	//reads all records from given dataset into records
-	public void read(String dataset) throws Exception {
+	public void read(String dataset) {
 		for (CSVRecord rec : DataAnalysis.getFileParser(dataset)) {
+			Record newRecord = null;
 			String isoCode = "";
 			LocalDate date = null;
 			long newCases = 0;
 			long totalCases = 0;
-			long totalCasesPerMillion = 0;
+			double totalCasesPerMillion = 0;
 			long newDeaths = 0;
 			long totalDeaths = 0;
-			long totalDeathsPerMillion = 0;
+			double totalDeathsPerMillion = 0;
 			long fullyVaccinated = 0;
 			double rateOfVaccination = 0;
 			String s;
@@ -37,7 +35,7 @@ public class Records {
 			s = rec.get("date");
 			if (!s.equals("")) {
 				String[] d = s.split("-|/");
-				date = LocalDate.of(Integer.parseInt(d[2]), Integer.parseInt(d[0]), Integer.parseInt(d[2]));
+				date = LocalDate.of(Integer.parseInt(d[2]), Integer.parseInt(d[0]), Integer.parseInt(d[1]));
 			}
 			s = rec.get("new_cases");
 			if (!s.equals("")) {
@@ -49,7 +47,7 @@ public class Records {
 			}
 			s = rec.get("total_cases_per_million");
 			if (!s.equals("")) {
-				totalCasesPerMillion = Long.parseLong(s);
+				totalCasesPerMillion = Double.parseDouble(s);
 			}
 			s = rec.get("new_deaths");
 			if (!s.equals("")) {
@@ -61,7 +59,7 @@ public class Records {
 			}
 			s = rec.get("total_deaths_per_million");
 			if (!s.equals("")) {
-				totalDeathsPerMillion = Long.parseLong(s);
+				totalDeathsPerMillion = Double.parseDouble(s);
 			}
 			s = rec.get("people_fully_vaccinated");
 			if (!s.equals("")) {
@@ -71,7 +69,11 @@ public class Records {
 			if (!s.equals("")) {
 				rateOfVaccination = Double.parseDouble(s);
 			}
-			Record newRecord = new Record(isoCode, date, newCases, totalCases, totalCasesPerMillion, newDeaths, totalDeaths, totalDeathsPerMillion, fullyVaccinated, rateOfVaccination);
+			try {
+				newRecord = new Record(isoCode, date, newCases, totalCases, totalCasesPerMillion, newDeaths, totalDeaths, totalDeathsPerMillion, fullyVaccinated, rateOfVaccination);
+			} catch(Exception e) {
+				System.out.println("ERROR "+isoCode+" "+date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			}
 			records.add(newRecord);
 		}
 	}
