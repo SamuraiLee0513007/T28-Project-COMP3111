@@ -96,6 +96,7 @@ public class Records {
                 records.add(record);
             }
         }
+        Collections.sort(records, Comparator.comparing(Record::getDate) );
         return records;
     }
 	
