@@ -85,4 +85,16 @@ public class Records {
 		}
 		return null;
 	}
+	
+	public Record getLatestRecord(String isoCode, LocalDate date) {
+		LocalDate latest = null;
+		Record latestRecord = null;
+		for(Record record : records) {
+			if(record.getCountry().equals(isoCode) && (latest == null || record.getDate().isAfter(latest))) {
+				latest = record.getDate();
+				latestRecord = record;
+			}
+		}
+		return latestRecord;
+	}
 }
