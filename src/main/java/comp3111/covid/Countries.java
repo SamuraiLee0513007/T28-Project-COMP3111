@@ -5,13 +5,13 @@ import java.util.*;
 import org.apache.commons.csv.CSVRecord;
 
 public class Countries {
-	private static Set<Country> countries = new HashSet<Country>();
-	public Countries() {
-		
+	private Set<Country> countries = new HashSet<Country>();
+	public Countries() { }
+	public Countries(String dataset) throws Exception {
+		read(dataset);
 	}
-	
 	//reads all countries from given dataset
-	public static void read(String dataset) throws Exception {
+	public void read(String dataset) throws Exception {
 		for (CSVRecord rec : DataAnalysis.getFileParser(dataset)) {
 			String name = "";
 			String isoCode = "";
@@ -35,7 +35,6 @@ public class Countries {
 			}
 		}
 	}
-	
 	public Vector<Country> getCountries() {
 		Vector<Country> countriesList = new Vector<Country>(countries);
 		Collections.sort(countriesList, Comparator.comparing(Country::getName) );
