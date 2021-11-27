@@ -86,6 +86,16 @@ public class Records {
 		return null;
 	}
 	
+	public Vector<Record> getRecord(String isoCode) {
+        Vector<Record> records = new Vector<>();
+        for(Record record : records) {
+            if(record.getCountry().equals(isoCode)) {
+                records.add(record);
+            }
+        }
+        return records;
+    }
+	
 	public Record getLatestRecord(String isoCode, LocalDate date) {
 		LocalDate latest = null;
 		Record latestRecord = null;
