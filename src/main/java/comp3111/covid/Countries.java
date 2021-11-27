@@ -6,12 +6,12 @@ import org.apache.commons.csv.CSVRecord;
 
 public class Countries {
 	private static Set<Country> countries = new HashSet<Country>();
-	public Countries() {
-		
+	public Countries() { }
+	public Countries(String dataset) {
+		read(dataset);
 	}
-	
 	//reads all countries from given dataset
-	public static void read(String dataset) throws Exception {
+	public static void read(String dataset) {
 		for (CSVRecord rec : DataAnalysis.getFileParser(dataset)) {
 			String name = "";
 			String isoCode = "";
@@ -30,19 +30,36 @@ public class Countries {
 				population = Long.parseLong(s);
 			}
 			Country newCountry = new Country(name, isoCode, population);
-			if(!countries.contains(newCountry)) {
+			if( countries.contains(newCountry) == false ) {
 				countries.add(newCountry);
 			}
 		}
 	}
-	
-	public static Vector<String> getCountries() {
-		LinkedHashSet<String> hashSet = new LinkedHashSet<String>();
-		for (Country x : countries)
-			hashSet.add(x.getName());
-		Vector<String> countriesList = new Vector<String>();
-		countriesList.addAll(hashSet);
-		Collections.sort(countriesList );
+	public static Vector<Country> getCountries() {
+		Vector<Country> countriesList = new Vector<Country>(countries);
+		Collections.sort(countriesList, Comparator.comparing(Country::getName) );
 		return countriesList;
+	}
+	public static Vector<String> getCountriesString() {
+		Vector<Country> countriesList = new Vector<Country>(countries);
+		Collections.sort(countriesList, Comparator.comparing(Country::getName) );
+		LinkedHashSet<String> temp = new LinkedHashSet<String>();
+		for (Country x : countriesList)
+			temp.add(x.getName());
+		Vector<String> temp1 = new Vector<>();
+		temp1.addAll(temp);
+
+		return temp1;
+	}
+
+
+
+	public static String toIsoCode(String name) {
+		for(Country country : countries) {
+			if(name.equals(country.getName())) {
+				return country.getIsoCode();
+			}
+		}
+		return null;
 	}
 }

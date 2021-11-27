@@ -1,5 +1,4 @@
 package comp3111.covid;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -10,17 +9,31 @@ public class Record {
 	private String isoCode;
 	private LocalDate date;
 	private long newCases;
+	private long totalCases;
+	private double totalCasesPerMillion;
 	private long newDeaths;
+	private long totalDeaths;
+	private double totalDeathsPerMillion;
 	private long fullyVaccinated;
-	public Record(String isoCode, LocalDate date, long newCases, long newDeaths, long fullyVaccinated) {
+	private double rateOfVaccination;	// in percentage
+	public Record(String isoCode, LocalDate date) {
+		this.isoCode = isoCode;
+		this.date = date;
+	}
+	public Record(String isoCode, LocalDate date, 
+			long newCases, long totalCases, double totalCasesPerMillion, 
+			long newDeaths, long totalDeaths, double totalDeathsPerMillion,
+			long fullyVaccinated, double rateOfVaccination) {
 		this.isoCode = isoCode;
 		this.date = date;
 		this.newCases = newCases;
+		this.totalCases = totalCases;
+		this.totalCasesPerMillion = totalCasesPerMillion;
 		this.newDeaths = newDeaths;
+		this.totalDeaths = totalDeaths;
+		this.totalDeathsPerMillion = totalDeathsPerMillion;
 		this.fullyVaccinated = fullyVaccinated;
-	}
-	public Record(String isoCode,LocalDate date){
-
+		this.rateOfVaccination = rateOfVaccination;
 	}
 	public String getCountry() {
 		return isoCode;
@@ -31,69 +44,40 @@ public class Record {
 	public long getNewCases() {
 		return newCases;
 	}
+	public long getTotalCases() {
+		return totalCases;
+	}
+	public double getTotalCasesPerMillion() {
+		return totalCasesPerMillion;
+	}
 	public long getNewDeaths() {
 		return newDeaths;
+	}
+	public long getTotalDeaths() {
+		return totalDeaths;
+	}
+	public double getTotalDeathsPerMillion() {
+		return totalDeathsPerMillion;
 	}
 	public long getFullyVaccinated() {
 		return fullyVaccinated;
 	}
-	
-	//returns total cases for the specified country as of the specified date
-	public static long getTotalCases(Vector<Record> records, String isoCode, LocalDate date) {
-		int totalCases = 0;
-		for(Record record : records) {
-			if(record.getCountry() == isoCode && record.getDate().isBefore(date)) {
-				totalCases += record.getNewCases();
-			}
-		}
-		return totalCases;
+	public double getRateOfVaccination() {
+		return rateOfVaccination;
 	}
-	
-	//returns total deaths for the specified country as of the specified date
-	public static long getTotalDeaths(Vector<Record> records, String isoCode, LocalDate date) {
-		int totalDeaths = 0;
-		for(Record record : records) {
-			if(record.getCountry() == isoCode && record.getDate().isBefore(date)) {
-				totalDeaths += record.getNewDeaths();
-			}
-		}
-		return totalDeaths;
+	@Override
+	public boolean equals(Object rhs){
+	   if(this == rhs){
+	      return true;
+	   }
+	   if(rhs instanceof Record){
+	       Record record = (Record) rhs;
+	       return this.isoCode.equals(record.isoCode) && this.date.equals(record.date);
+	   }
+	   return false;
 	}
-	
-	//reads all records from given dataset and returns them in a vector
-	public static Vector<Record> read(String dataset) throws Exception {
-		Vector<Record> records = new Vector<Record>();
-		for (CSVRecord rec : DataAnalysis.getFileParser(dataset)) {
-			String isoCode = "";
-			LocalDate date = null;
-			long newCases = 0;
-			long newDeaths = 0;
-			long fullyVaccinated = 0;
-			String s;
-			s = rec.get("iso_code");
-			if (!s.equals("")) {
-				isoCode = s;
-			}
-			s = rec.get("date");
-			if (!s.equals("")) {
-				date = LocalDate.parse(s, DateTimeFormatter.ofPattern("[MM-dd-yyyy][MM/dd/yyyy"));
-			}
-			s = rec.get("new_cases");
-			if (!s.equals("")) {
-				newCases = Long.parseLong(s);
-			}
-			s = rec.get("new_deaths");
-			if (!s.equals("")) {
-				newDeaths = Long.parseLong(s);
-			}
-			s = rec.get("people_fully_vaccinated");
-			if (!s.equals("")) {
-				fullyVaccinated = Long.parseLong(s);
-			}
-			Record newRecord = new Record(isoCode, date, newCases, newDeaths, fullyVaccinated);
-			records.add(newRecord);
-		}
-		return records;
-	}
-	
+	@Override
+	public int hashCode(){
+	   return isoCode.hashCode() + date.hashCode();
+	}	
 }
