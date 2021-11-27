@@ -11,6 +11,11 @@ public class Records {
 	public Records() { }
 	public Records(String dataset) {
 		read(dataset);
+		//int count = 0;
+		//for(Record r : records) {
+		//		System.out.println(count+" "+r.getCountry()+" "+r.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		//		count++;
+		//}
 	}
 
 	//reads all records from given dataset into records
@@ -69,11 +74,7 @@ public class Records {
 			if (!s.equals("")) {
 				rateOfVaccination = Double.parseDouble(s);
 			}
-			try {
-				newRecord = new Record(isoCode, date, newCases, totalCases, totalCasesPerMillion, newDeaths, totalDeaths, totalDeathsPerMillion, fullyVaccinated, rateOfVaccination);
-			} catch(Exception e) {
-				System.out.println("ERROR "+isoCode+" "+date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-			}
+			newRecord = new Record(isoCode, date, newCases, totalCases, totalCasesPerMillion, newDeaths, totalDeaths, totalDeathsPerMillion, fullyVaccinated, rateOfVaccination);
 			records.add(newRecord);
 		}
 	}
@@ -88,9 +89,9 @@ public class Records {
 		return null;
 	}
 	
-	public Vector<Record> getRecord(String isoCode) {
+	public Vector<Record> getRecords(String isoCode) {
         Vector<Record> records = new Vector<>();
-        for(Record record : records) {
+        for(Record record : this.records) {
             if(record.getCountry().equals(isoCode)) {
                 records.add(record);
             }
