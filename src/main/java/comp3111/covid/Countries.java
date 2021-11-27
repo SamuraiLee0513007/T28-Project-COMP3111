@@ -8,17 +8,10 @@ public class Countries {
 	private Set<Country> countries = new HashSet<Country>();
 	public Countries() { }
 	public Countries(String dataset) {
-		try {
-			read(dataset);
-		} catch (Exception exception) {
-			System.out.println("An error occured while reading countries.");
-		}
-		for(Country c : countries) {
-			System.out.println(c.getName());
-		}
+		read(dataset);
 	}
 	//reads all countries from given dataset
-	public void read(String dataset) throws Exception {
+	public void read(String dataset) {
 		for (CSVRecord rec : DataAnalysis.getFileParser(dataset)) {
 			String name = "";
 			String isoCode = "";
@@ -46,5 +39,13 @@ public class Countries {
 		Vector<Country> countriesList = new Vector<Country>(countries);
 		Collections.sort(countriesList, Comparator.comparing(Country::getName) );
 		return countriesList;
+	}
+	public String toIsoCode(String name) {
+		for(Country country : countries) {
+			if(name.equals(country.getName())) {
+				return country.getIsoCode();
+			}
+		}
+		return null;
 	}
 }
