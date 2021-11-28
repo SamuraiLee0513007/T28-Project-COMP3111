@@ -177,15 +177,15 @@ public class Controller {
         listTA.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         String iDataset = textfieldDataset.getText();
         Countries.read("COVID_Dataset_v1.0.csv");
-        if(listCA.getItems().isEmpty()) {
+        if(listTA.getItems().isEmpty()) {
 	        for (Country temp:Countries.getCountries()){
 	            listTA.getItems().add(temp.getName());
 	        }
         }
         choiceboxTA.getItems().clear();
-        choiceboxTA.getItems().add("A");
-        choiceboxTA.getItems().add("B");
-        choiceboxTA.getItems().add("C");
+        choiceboxTA.getItems().add("A - Confirmed Cases");
+        choiceboxTA.getItems().add("B - Confirmed Deaths");
+        choiceboxTA.getItems().add("C - Rate of Vaccination");
         choiceboxTA.getSelectionModel().selectFirst();
         //Setup columns
     }
@@ -262,10 +262,10 @@ public class Controller {
             columnFully.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getFullyVaccinated().getValue()));
             columnfull1M.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getRateOfVaccination().getValue()));
             tableTA.getColumns().clear();
-            if (choiceboxTA.getValue().equals("A")){
+            if (choiceboxTA.getValue().equals("A - Confirmed Cases")){
                 TAtitle.setText("Number of Confirmed COVID-19 Cases as of "+datepickerTA.getValue().toString());
                 tableTA.getColumns().addAll(columnCountry,columnCases,columnCases1M);
-            }else if (choiceboxTA.getValue().equals("B")){
+            }else if (choiceboxTA.getValue().equals("B - Confirmed Deaths")){
                 TAtitle.setText("Number of Confirmed COVID-19 Deaths as of "+datepickerTA.getValue().toString());
                 tableTA.getColumns().addAll(columnCountry,columnDeath,columnDeath1m);
             }else{
@@ -294,9 +294,9 @@ public class Controller {
 	        }
         }
         choiceboxCA.getItems().clear();
-        choiceboxCA.getItems().add("A");
-        choiceboxCA.getItems().add("B");
-        choiceboxCA.getItems().add("C");
+        choiceboxCA.getItems().add("A - Confirmed Cases");
+        choiceboxCA.getItems().add("B - Confirmed Deaths");
+        choiceboxCA.getItems().add("C - Rate of Vaccination");
         choiceboxCA.getSelectionModel().selectFirst();
         //Setup charts
 
@@ -351,16 +351,18 @@ public class Controller {
             textAreaConsole.setText(textAreaConsole.getText()+"Countries:"+selectedcountries);
             //Generate Chart
             chartCA.getData().clear();
+            chartCA.setAnimated(false);
+            chartCA.setCreateSymbols(false);
             chartCA.setTitle("Cumulative Confirmed COVID-19 Cases (per 1M)");
                 for (String country : selectedcountries){
                     Records temprecords = new Records("COVID_Dataset_v1.0.csv");
                     Vector<StatisticsReport> tempvector =  temprecords.getStatisticsForPeriod(Countries.toIsoCode((country)), startdateCA.getValue(), enddateCA.getValue());
                     XYChart.Series<String, Double> series = new XYChart.Series<String, Double>();
                     for (StatisticsReport x : tempvector) {
-                            if (choiceboxCA.getValue().equals("A")) {
+                            if (choiceboxCA.getValue().equals("A - Confirmed Cases")) {
                                 chartCA.setTitle("Cumulative Confirmed COVID-19 Cases (per 1M)");
                                 series.getData().add(new XYChart.Data<String, Double>(x.getDate().toString(), x.getTotalCasesPerMillion().getValue()));
-                            }else if (choiceboxCA.getValue().equals("B")){
+                            }else if (choiceboxCA.getValue().equals("B - Confirmed Deaths")){
                                 chartCA.setTitle("Cumulative Confirmed COVID-19 Deaths (per 1M)");
                                 series.getData().add(new XYChart.Data<String, Double>(x.getDate().toString(), x.getTotalDeathsPerMillion().getValue()));
                             }else{
