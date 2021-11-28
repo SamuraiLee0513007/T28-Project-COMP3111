@@ -9,12 +9,27 @@ public class Country {
 		this.isoCode = isoCode;
 		this.population = population;
 	}
+
+	/**
+	 * Getter of name
+	 * @return String of name
+	 */
 	public String getName() {
 		return name;
 	}
+
+	/**
+	 * Getter of isocode
+	 * @return String of isocode
+	 */
 	public String getIsoCode() {
 		return isoCode;
 	}
+
+	/**
+	 * Getter of population
+	 * @return Long of population
+	 */
 	public long getPopulation() {
 		return population;
 	}

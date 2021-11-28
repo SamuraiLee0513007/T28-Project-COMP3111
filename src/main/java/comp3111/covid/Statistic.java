@@ -5,6 +5,12 @@ import java.time.LocalDate;
 public class Statistic<T> {
 	private T value;
 	private LocalDate date;
+
+	/**
+	 * Constrctor of statistic with a value and date
+	 * @param value
+	 * @param date
+	 */
 	public Statistic(T value, LocalDate date) {
 		this.value = value;
 		this.date = date;

@@ -32,33 +32,83 @@ public class StatisticsReport {
 		this.fullyVaccinated = fullyVaccinated;
 		this.rateOfVaccination = rateOfVaccination;
 	}
+
+	/**
+	 * Get country
+	 * @return country
+	 */
 	public String getCountry() {
 		return isoCode;
 	}
+
+	/**
+	 * Get date
+	 * @return date
+	 */
 	public LocalDate getDate() {
 		return date;
 	}
+
+	/**
+	 * Get newcases
+	 * @return newcases
+	 */
 	public Statistic<Long> getNewCases() {
 		return newCases;
 	}
+
+	/**
+	 * Get total cases
+	 * @return total cases
+	 */
 	public Statistic<Long> getTotalCases() {
 		return totalCases;
 	}
+
+	/**
+	 * Get totalcases per 1M
+	 * @return totalcases per 1M
+	 */
 	public Statistic<Double> getTotalCasesPerMillion() {
 		return totalCasesPerMillion;
 	}
+
+	/**
+	 * Get new deaths
+	 * @return new deaths
+	 */
 	public Statistic<Long> getNewDeaths() {
 		return newDeaths;
 	}
+
+	/**
+	 * Get total deaths
+	 * @return total deaths
+	 */
 	public Statistic<Long> getTotalDeaths() {
 		return totalDeaths;
 	}
+
+	/**
+	 * Get total deaths per 1M
+	 * @return total deaths per 1M
+	 */
 	public Statistic<Double> getTotalDeathsPerMillion() {
 		return totalDeathsPerMillion;
 	}
+
+	/**
+	 * Get fully vaccinated
+	 * @return fully vaccinated
+	 */
 	public Statistic<Long> getFullyVaccinated() {
 		return fullyVaccinated;
 	}
+
+	/**
+	 * Get rate of vaccination
+	 * @return rate of vaccination
+	 */
 	public Statistic<Double> getRateOfVaccination() {
 		return rateOfVaccination;
 	}

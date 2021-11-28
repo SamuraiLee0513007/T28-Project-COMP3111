@@ -3,7 +3,9 @@ package comp3111.covid;
 import java.util.*;
 
 import org.apache.commons.csv.CSVRecord;
-
+/**
+ * A class for storing the list of countries
+ */
 public class Countries {
 	private static Set<Country> countries = new HashSet<Country>();
 	public Countries() { }
@@ -11,6 +13,11 @@ public class Countries {
 		read(dataset);
 	}
 	//reads all countries from given dataset
+
+	/**
+	 * Read all data from dataset into countries variable
+	 * @param dataset
+	 */
 	public static void read(String dataset) {
 		for (CSVRecord rec : DataAnalysis.getFileParser(dataset)) {
 			String name = "";
@@ -35,11 +42,22 @@ public class Countries {
 			}
 		}
 	}
+
+	/**
+	 * A getter for countries
+	 * @return A vector of sorted country
+	 */
 	public static Vector<Country> getCountries() {
 		Vector<Country> countriesList = new Vector<Country>(countries);
 		Collections.sort(countriesList, Comparator.comparing(Country::getName) );
 		return countriesList;
 	}
+
+	/**
+	 *A static function to convert country name to isocode
+	 * @param name
+	 * @return
+	 */
 	public static String toIsoCode(String name) {
 		for(Country country : countries) {
 			if(name.equals(country.getName())) {

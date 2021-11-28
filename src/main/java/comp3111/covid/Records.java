@@ -9,6 +9,12 @@ import org.apache.commons.csv.CSVRecord;
 public class Records {
 	private Set<Record> records = new HashSet<Record>();
 	public Records() { }
+
+	/**
+	 * Constrctor of records
+	 * read all data from csv
+	 * @param dataset
+	 */
 	public Records(String dataset) {
 		read(dataset);
 		//int count = 0;
@@ -19,6 +25,11 @@ public class Records {
 	}
 
 	//reads all records from given dataset into records
+
+	/**
+	 * Read all records from dataset
+	 * @param dataset
+	 */
 	public void read(String dataset) {
 		for (CSVRecord rec : DataAnalysis.getFileParser(dataset)) {
 			Record newRecord = null;
@@ -78,7 +89,13 @@ public class Records {
 			records.add(newRecord);
 		}
 	}
-	
+
+	/**
+	 * Find record up to the date of specificed country
+	 * @param isoCode
+	 * @param date
+	 * @return
+	 */
 	public Record getRecord(String isoCode, LocalDate date) {
 		Record query = new Record(isoCode, date);
 		for(Record record : records) {
@@ -88,7 +105,12 @@ public class Records {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Get records of specific country
+	 * @param isoCode
+	 * @return
+	 */
 	public Vector<Record> getRecords(String isoCode) {
         Vector<Record> records = new Vector<>();
         for(Record record : this.records) {
@@ -100,6 +122,12 @@ public class Records {
         return records;
     }
 
+	/**
+	 * Find records up to the date of specificed country
+	 * @param isoCode
+	 * @param date
+	 * @return
+	 */
 	public Vector<Record> getRecordsUpTo(String isoCode, LocalDate date) {
         Vector<Record> records = new Vector<>();
         for(Record record : this.records) {
@@ -110,7 +138,13 @@ public class Records {
         Collections.sort(records, Comparator.comparing(Record::getDate) );
         return records;
     }
-	
+
+	/**
+	 * Get the latest record of specificed country and before or equal to date
+	 * @param isoCode
+	 * @param date
+	 * @return
+	 */
 	public Record getLatestRecord(String isoCode, LocalDate date) {
 		LocalDate latest = null;
 		Record latestRecord = null;
@@ -122,7 +156,13 @@ public class Records {
 		}
 		return latestRecord;
 	}
-	
+
+	/**
+	 * Get latest statisticsreport up to a date in a specified country
+	 * @param isoCode
+	 * @param date
+	 * @return
+	 */
 	public StatisticsReport getLatestStatistics(String isoCode, LocalDate date) {
 		StatisticsReport latestStatistics = null;
 		Statistic<Long> newCases = null;
@@ -188,7 +228,14 @@ public class Records {
 		latestStatistics = new StatisticsReport(isoCode, date, newCases, totalCases, totalCasesPerMillion, newDeaths, totalDeaths, totalDeathsPerMillion, fullyVaccinated, rateOfVaccination);
 		return latestStatistics;
 	}
-	
+
+	/**
+	 * Get vector of statisticsreport in specified country and within startdate and enddate
+	 * @param isoCode
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
 	public Vector<StatisticsReport> getStatisticsForPeriod(String isoCode, LocalDate startDate, LocalDate endDate) {
 		Vector<StatisticsReport> statisticsReportList = new Vector<StatisticsReport>();
 		for(LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
