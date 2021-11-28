@@ -12,3 +12,4 @@ https://github.com/SamuraiLee0513007/T28-Project-COMP3111
 	email:lcpang | github:panglokchi|  
 	dev branch:nk_feature1_lok  
 	Individual task assignment: Task B1 & Task B2
+	[A2.docx](https://github.com/SamuraiLee0513007/T28-Project-COMP3111/files/7613890/A2.docx)
