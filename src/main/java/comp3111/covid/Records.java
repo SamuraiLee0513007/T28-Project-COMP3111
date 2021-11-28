@@ -149,7 +149,7 @@ public class Records {
 				newDeaths = new Statistic<Long>(record.getNewDeaths(), record.getDate());
 			}
 			if(totalDeaths == null && record.getTotalDeaths() != null) {
-				totalDeaths = new Statistic<Long>(record.getNewDeaths(), record.getDate());
+				totalDeaths = new Statistic<Long>(record.getTotalDeaths(), record.getDate());
 			}
 			if(totalDeathsPerMillion == null && record.getTotalDeathsPerMillion() != null) {
 				totalDeathsPerMillion = new Statistic<Double>(record.getTotalDeathsPerMillion(), record.getDate());
