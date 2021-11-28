@@ -27,4 +27,4 @@ Javadoc:
 [Here](https://panglokchi.github.io/comp3111_javadoc/doc/comp3111/covid/package-summary.html)
 
 Screenshots:
-[notes.docx](./notes.docx)
+[notes.docx](https://github.com/SamuraiLee0513007/T28-Project-COMP3111/files/7613951/notes.docx)
