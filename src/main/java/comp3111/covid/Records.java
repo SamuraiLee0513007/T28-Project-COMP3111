@@ -22,16 +22,16 @@ public class Records {
 	public void read(String dataset) {
 		for (CSVRecord rec : DataAnalysis.getFileParser(dataset)) {
 			Record newRecord = null;
-			String isoCode = "";
+			String isoCode = null;
 			LocalDate date = null;
-			long newCases = 0;
-			long totalCases = 0;
-			double totalCasesPerMillion = 0;
-			long newDeaths = 0;
-			long totalDeaths = 0;
-			double totalDeathsPerMillion = 0;
-			long fullyVaccinated = 0;
-			double rateOfVaccination = 0;
+			Long newCases = null;
+			Long totalCases = null;
+			Double totalCasesPerMillion = null;
+			Long newDeaths = null;
+			Long totalDeaths = null;
+			Double totalDeathsPerMillion = null;
+			Long fullyVaccinated = null;
+			Double rateOfVaccination = null;
 			String s;
 			s = rec.get("iso_code");
 			if (!s.equals("")) {
@@ -99,6 +99,17 @@ public class Records {
         Collections.sort(records, Comparator.comparing(Record::getDate) );
         return records;
     }
+
+	public Vector<Record> getRecordsUpTo(String isoCode, LocalDate date) {
+        Vector<Record> records = new Vector<>();
+        for(Record record : this.records) {
+            if(record.getCountry().equals(isoCode) && !record.getDate().isAfter(date)) {
+                records.add(record);
+            }
+        }
+        Collections.sort(records, Comparator.comparing(Record::getDate) );
+        return records;
+    }
 	
 	public Record getLatestRecord(String isoCode, LocalDate date) {
 		LocalDate latest = null;
@@ -110,5 +121,71 @@ public class Records {
 			}
 		}
 		return latestRecord;
+	}
+	
+	public StatisticsReport getLatestStatistics(String isoCode, LocalDate date) {
+		StatisticsReport latestStatistics = null;
+		Statistic<Long> newCases = null;
+		Statistic<Long> totalCases = null;
+		Statistic<Double> totalCasesPerMillion = null;
+		Statistic<Long> newDeaths = null;
+		Statistic<Long> totalDeaths = null;
+		Statistic<Double> totalDeathsPerMillion = null;
+		Statistic<Long> fullyVaccinated = null;
+		Statistic<Double> rateOfVaccination = null;	// in percentage
+		Vector<Record> records = getRecordsUpTo(isoCode, date);
+		Collections.reverse(records);
+		for(Record record : records) {
+			if(newCases == null && record.getNewCases() != null) {
+				newCases = new Statistic<Long>(record.getNewCases(), record.getDate());
+			}
+			if(totalCases == null && record.getTotalCases() != null) {
+				totalCases = new Statistic<Long>(record.getTotalCases(), record.getDate());
+			}
+			if(totalCasesPerMillion == null && record.getTotalCasesPerMillion() != null) {
+				totalCasesPerMillion = new Statistic<Double>(record.getTotalCasesPerMillion(), record.getDate());
+			}
+			if(newDeaths == null && record.getNewDeaths() != null) {
+				newDeaths = new Statistic<Long>(record.getNewDeaths(), record.getDate());
+			}
+			if(totalDeaths == null && record.getTotalDeaths() != null) {
+				totalDeaths = new Statistic<Long>(record.getNewDeaths(), record.getDate());
+			}
+			if(totalDeathsPerMillion == null && record.getTotalDeathsPerMillion() != null) {
+				totalDeathsPerMillion = new Statistic<Double>(record.getTotalDeathsPerMillion(), record.getDate());
+			}
+			if(fullyVaccinated == null && record.getFullyVaccinated() != null) {
+				fullyVaccinated = new Statistic<Long>(record.getFullyVaccinated(), record.getDate());
+			}
+			if(rateOfVaccination == null && record.getRateOfVaccination() != null) {
+				rateOfVaccination = new Statistic<Double>(record.getRateOfVaccination(), record.getDate());
+			}
+		}
+		if(newCases == null) {
+			newCases = new Statistic<Long>(Long.valueOf(0));
+		}
+		if(totalCases == null) {
+			totalCases = new Statistic<Long>(Long.valueOf(0));
+		}
+		if(totalCasesPerMillion == null) {
+			totalCasesPerMillion = new Statistic<Double>(Double.valueOf(0));
+		}
+		if(newDeaths == null) {
+			newDeaths = new Statistic<Long>(Long.valueOf(0));
+		}
+		if(totalDeaths == null) {
+			totalDeaths = new Statistic<Long>(Long.valueOf(0));
+		}
+		if(totalDeathsPerMillion == null) {
+			totalDeathsPerMillion = new Statistic<Double>(Double.valueOf(0));
+		}
+		if(fullyVaccinated == null) {
+			fullyVaccinated = new Statistic<Long>(Long.valueOf(0));
+		}
+		if(rateOfVaccination == null) {
+			rateOfVaccination = new Statistic<Double>(Double.valueOf(0));
+		}
+		latestStatistics = new StatisticsReport(isoCode, date, newCases, totalCases, totalCasesPerMillion, newDeaths, totalDeaths, totalDeathsPerMillion, fullyVaccinated, rateOfVaccination);
+		return latestStatistics;
 	}
 }
