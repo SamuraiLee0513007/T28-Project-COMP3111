@@ -71,16 +71,16 @@ public class Controller {
     private ListView<String> listTA;
 
     @FXML
-    private TableView<Record> tableTA;
+    private TableView<StatisticsReport> tableTA;
 
     @FXML
-    private TableColumn<Record,String> columnCountry;
+    private TableColumn<StatisticsReport,String> columnCountry;
 
     @FXML
-    private TableColumn<Record, Long> columnCases;
+    private TableColumn<StatisticsReport, Long> columnCases;
 
     @FXML
-    private TableColumn<Record, Double> columnCases1M;
+    private TableColumn<StatisticsReport, Double> columnCases1M;
 
     @FXML
     private Button generateTA;
@@ -98,12 +98,12 @@ public class Controller {
     private ListView<String> listCA;
 
     @FXML
-    private LineChart<String,Long> chartCA;
+    private LineChart<String,Double> chartCA;
 
-    private TableColumn<Record,Long> columnDeath;
-    private TableColumn<Record,Double> columnDeath1m;
-    private TableColumn<Record,Long> columnFully;
-    private TableColumn<Record,Double> columnfull1M;
+    private TableColumn<StatisticsReport,Long> columnDeath;
+    private TableColumn<StatisticsReport,Double> columnDeath1m;
+    private TableColumn<StatisticsReport,Long> columnFully;
+    private TableColumn<StatisticsReport,Double> columnfull1M;
 
 
     /**
@@ -198,21 +198,21 @@ public class Controller {
             textAreaConsole.setText(textAreaConsole.getText()+"Countries:"+selectedcountries);
             //Generate Table
 
-            ObservableList<Record> records = FXCollections.observableArrayList();
+            ObservableList<StatisticsReport> records = FXCollections.observableArrayList();
             for (String countryselected: selectedcountries){
                 //Setup table
                 //System.out.println("Selected :"+countryselected);
-                Record temp = new Records("COVID_Dataset_v1.0.csv").getLatestRecord(Countries.toIsoCode(countryselected),datepickerTA.getValue());
+                StatisticsReport temp = new Records("COVID_Dataset_v1.0.csv").getLatestStatistics(Countries.toIsoCode(countryselected),datepickerTA.getValue());
                 //System.out.println(temp.getCountry()+"  "+temp.getDate()+" "+temp.getTotalCases());
                 records.add( temp);
             }
-            columnCountry = new TableColumn<Record,String>();
-            columnCases = new TableColumn<Record,Long>();
-            columnCases1M = new TableColumn<Record,Double>();
-            columnDeath = new TableColumn<Record,Long>();
-            columnDeath1m = new TableColumn<Record,Double>();
-            columnFully = new TableColumn<Record,Long>();
-            columnfull1M = new TableColumn<Record,Double>();
+            columnCountry = new TableColumn<StatisticsReport,String>();
+            columnCases = new TableColumn<StatisticsReport,Long>();
+            columnCases1M = new TableColumn<StatisticsReport,Double>();
+            columnDeath = new TableColumn<StatisticsReport,Long>();
+            columnDeath1m = new TableColumn<StatisticsReport,Double>();
+            columnFully = new TableColumn<StatisticsReport,Long>();
+            columnfull1M = new TableColumn<StatisticsReport,Double>();
 
 
             columnCountry.setText("Country");
@@ -224,12 +224,12 @@ public class Controller {
             columnfull1M.setText("Rate of vaccination");
             tableTA.setItems(records);
             columnCountry.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getCountry()));
-            columnCases.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getTotalCases()));
-            columnCases1M.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getTotalCasesPerMillion()));
-            columnDeath.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getTotalDeaths()));
-            columnDeath1m.setCellValueFactory(param -> new SimpleObjectProperty<>( param.getValue().getTotalDeathsPerMillion()));
-            columnFully.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getFullyVaccinated()));
-            columnfull1M.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getRateOfVaccination()));
+            columnCases.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getTotalCases().getValue()));
+            columnCases1M.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getTotalCasesPerMillion().getValue()));
+            columnDeath.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getTotalDeaths().getValue()));
+            columnDeath1m.setCellValueFactory(param -> new SimpleObjectProperty<>( param.getValue().getTotalCasesPerMillion().getValue()));
+            columnFully.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getFullyVaccinated().getValue()));
+            columnfull1M.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getTotalCasesPerMillion().getValue()));
             tableTA.getColumns().clear();
             if (choiceboxTA.getValue().equals("A")){
                 TAtitle.setText("Number of Confirmed COVID-19 Cases as of "+datepickerTA.getValue().toString());
@@ -309,20 +309,20 @@ public class Controller {
                 for (String country : selectedcountries){
                     Records temprecords = new Records("COVID_Dataset_v1.0.csv");
                     Vector<Record> tempvector =  temprecords.getRecords(Countries.toIsoCode(country));
-                    XYChart.Series<String, Long> series = new XYChart.Series<String, Long>();
+                    XYChart.Series<String, Double> series = new XYChart.Series<String, Double>();
                     for (Record x : tempvector) {
-                        if (Countries.toIsoCode(country).equals(x.getCountry())) {
+                        if (Objects.equals(Countries.toIsoCode(country), x.getCountry())) {
                             //System.out.println(country);
                             if ((x.getDate().equals(startdateCA.getValue())||x.getDate().isAfter(startdateCA.getValue())) && (x.getDate().equals(enddateCA.getValue())||x.getDate().isBefore(enddateCA.getValue()) ))
                                 if (choiceboxCA.getValue().equals("A")) {
                                     chartCA.setTitle("Cumulative Confirmed COVID-19 Cases (per 1M)");
-                                    series.getData().add(new XYChart.Data<String, Long>(x.getDate().toString(), (long) x.getTotalCasesPerMillion()));
+                                    series.getData().add(new XYChart.Data<String, Double>(x.getDate().toString(), x.getTotalCasesPerMillion()));
                                 }else if (choiceboxCA.getValue().equals("B")){
                                     chartCA.setTitle("Cumulative Confirmed COVID-19 Deaths (per 1M)");
-                                    series.getData().add(new XYChart.Data<String, Long>(x.getDate().toString(), (long) x.getTotalDeathsPerMillion()));
+                                    series.getData().add(new XYChart.Data<String, Double>(x.getDate().toString(), x.getTotalDeathsPerMillion()));
                                 }else{
                                     chartCA.setTitle("Cumulative Rate of Vaccination against COVID-19");
-                                    series.getData().add(new XYChart.Data<String, Long>(x.getDate().toString(), (long) x.getRateOfVaccination()));
+                                    series.getData().add(new XYChart.Data<String, Double>(x.getDate().toString(), x.getRateOfVaccination()));
                                 }
                         }
                     }
