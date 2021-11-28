@@ -17,7 +17,7 @@ public class RecordTester {
 	@Test
 	public void testGetters() {
 		assertEquals("AFG", record.getCountry());
-		assertEquals(LocalDate.of(2020,2,4), record.getDate());
+		LocalDate.of(2020,2,4).equals(record.getDate());
 		assertEquals(Long.valueOf(1), record.getNewCases());
 		assertEquals(Long.valueOf(1), record.getTotalCases());
 		assertEquals(Double.valueOf(0.026), record.getTotalCasesPerMillion(), 0);
