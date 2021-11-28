@@ -188,4 +188,12 @@ public class Records {
 		latestStatistics = new StatisticsReport(isoCode, date, newCases, totalCases, totalCasesPerMillion, newDeaths, totalDeaths, totalDeathsPerMillion, fullyVaccinated, rateOfVaccination);
 		return latestStatistics;
 	}
+	
+	public Vector<StatisticsReport> getStatisticsForPeriod(String isoCode, LocalDate startDate, LocalDate endDate) {
+		Vector<StatisticsReport> statisticsReportList = new Vector<StatisticsReport>();
+		for(LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+			statisticsReportList.add(getLatestStatistics(isoCode, date));
+		}
+		return statisticsReportList;
+	}
 }
