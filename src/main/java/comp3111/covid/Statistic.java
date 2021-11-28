@@ -25,4 +25,15 @@ public class Statistic<T> {
 	public LocalDate getDate() {
 		return date;
 	}
+	@Override
+	public boolean equals(Object rhs){
+		   if(this == rhs){
+		      return true;
+		   }
+		   if(rhs instanceof Statistic<?>){
+			   Statistic<T> s = (Statistic<T>) rhs;
+		       return this.value.equals(s.getValue());
+		   }
+		   return false;
+		}
 }
