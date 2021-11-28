@@ -117,7 +117,7 @@ public class StatisticsReport {
 	   if(this == rhs){
 	      return true;
 	   }
-	   if(rhs instanceof Record){
+	   if(rhs instanceof StatisticsReport){
 	       StatisticsReport report = (StatisticsReport) rhs;
 	       return this.isoCode.equals(report.isoCode) && this.date.equals(report.date);
 	   }
