@@ -1,5 +1,7 @@
 package comp3111.covid;
 
+import java.util.Objects;
+
 public class Country {
 	private String name;
 	private String isoCode;
@@ -25,7 +27,7 @@ public class Country {
 	   }
 	   if(country instanceof Country){
 	       Country c = (Country) country;
-	       return this.isoCode == c.isoCode;
+	       return Objects.equals(this.isoCode, c.isoCode);
 	   }
 	   return false;
 	}
