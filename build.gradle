@@ -18,6 +18,11 @@ task debug(type:JavaExec) {
 } 
 
 dependencies {
+    implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13.1'
+
 	// https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit
 	compile group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.31'
 
@@ -37,6 +42,9 @@ jacocoTestReport {
 		csv.enabled false
 		html.destination file("${buildDir}/jacocoHTML")
 	}
+}
+jacoco {
+    toolVersion = '0.8.7'
 }
 
 javafx {
