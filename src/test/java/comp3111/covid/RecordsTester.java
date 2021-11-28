@@ -53,6 +53,11 @@ public class RecordsTester {
 				new Statistic<Long>(Long.valueOf(219159), LocalDate.of(2021, 7, 11)),
 				new Statistic<Double>(Double.valueOf(0.56), LocalDate.of(2021, 7, 11))
 				);
+		StatisticsReport s1 = records.getLatestStatistics("AFG", LocalDate.of(2019, 1, 1));
 		assertEquals(si, s0);
+		StatisticsReport s2 = new StatisticsReport("AFG", LocalDate.of(2019, 1, 1), 
+					null, null, null, null, null, null, null, null
+				);
+		assertEquals(s1, s2);
 	}
 }
